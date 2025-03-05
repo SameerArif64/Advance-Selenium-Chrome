@@ -1,17 +1,16 @@
-# Project Title
+# Advance Selenium Chrome
 
-## Description
-This project is a collection of utility scripts designed for automation and data management using Python. The main functionalities include user input dialogs, file handling, and interactions with the DigiKey API.
+This project provides a custom Selenium Chrome WebDriver class with additional functionalities such as remote debugging, handling crashed tabs, and various element interaction methods.
 
 ## Features
-- User input dialog using Tkinter.
-- File operations for Excel and CSV files.
-- Open any file and Switch to window functions.
-- Integration with the DigiKey API to fetch part data.
-- Selenium automation for web tasks.
 
-## Requirements
-To run this project, you need to install the following packages:
+- Remote debugging support
+- Handling crashed tabs
+- Element interaction methods (click, double-click, send keys, select value)
+- Scroll the webpage
+- Retry logic for actions
 
+## Installation
 ```bash
-pip install -r requirements.txt
+pip install git+https://github.com/SameerArif64/Advance-Selenium-Chrome
+```
