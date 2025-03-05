@@ -1,3 +1,12 @@
+# Ignore build artifacts
 build/
 dist/
 *.egg-info/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore batch files
+*.bat
