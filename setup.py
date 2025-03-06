@@ -6,7 +6,7 @@ with open("requirements.txt") as f:
         (dependency_links if line.startswith("git+") else requirements).append(line.strip())
 
 setup(
-    name="advancechromedriver",
+    name="advance_selenium_chrome",
     version="0.1.0",
     packages=find_packages(),
     install_requires=requirements,
