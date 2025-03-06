@@ -1,6 +1,6 @@
-psutil==6.0.0
+psutil==7.0.0
 PyGetWindow==0.0.9
-pywin32==306
+pywin32==308
 Requests==2.32.3
 selenium==4.29.0
 webdriver_manager==4.0.2
