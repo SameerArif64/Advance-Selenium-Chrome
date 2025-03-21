@@ -256,7 +256,7 @@ class AdvanceSeleniumChrome(webdriver.Chrome):
                 error = e
         raise error  # Raise the last caught exception if suppress_error is False
 
-    def wait_for_element(self, selector: str, by: str = By.XPATH, timeout: int = 120, condition: str = "visible", suppress_error: bool = False) -> Optional[WebElement]:
+    def wait_for_element(self, selector: str, by: str = By.XPATH, timeout: int = 120, parent_element: Optional[WebElement] = None, condition: str = "visible", suppress_error: bool = False) -> Optional[WebElement]:
         """
         Wait for an element to meet the specified condition.
 
@@ -275,7 +275,8 @@ class AdvanceSeleniumChrome(webdriver.Chrome):
         wait_condition = conditions[condition]((by, selector))
 
         def action() -> WebElement:
-            return WebDriverWait(self, timeout).until(wait_condition)
+            search_context = parent_element or self
+            return WebDriverWait(search_context, timeout).until(wait_condition)
 
         return self._retry_logic(action, retries=1, suppress_error=suppress_error)
 
