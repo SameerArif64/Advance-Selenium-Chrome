@@ -164,7 +164,7 @@ class AdvanceSeleniumChrome(webdriver.Chrome):
         return None
 
 
-    def bring_to_front(self, suppress = False) -> None:
+    def bring_to_front(self, suppress_error: bool = False) -> None:
         """Activate the Chrome window to bring it to front."""
         try:
             if self.browser_pid is None:
@@ -193,7 +193,7 @@ class AdvanceSeleniumChrome(webdriver.Chrome):
                     print(f"Error activating window: {e}")
             raise RuntimeError(f"No Open Chrome window found{self.logging_string}.")
         except Exception as e:
-            if suppress:
+            if suppress_error:
                 print(f"Error bringing Chrome to front: {e}") if self.debug else None
                 return None
             raise e
