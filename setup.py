@@ -7,7 +7,7 @@ with open("requirements.txt") as f:
 
 setup(
     name="advance_selenium_chrome",
-    version="0.1.1",
+    version="0.1.2",
     packages=find_packages(),
     install_requires=requirements,
     dependency_links=dependency_links,
