@@ -206,6 +206,13 @@ class AdvanceSeleniumChrome(webdriver.Chrome):
         Returns:
             None
         """
+        try:
+            self.current_window_handle  # Try accessing it
+            # is_closed = driver.current_window_handle not in driver.window_handles
+        except:
+            # is_closed = True
+            if self.window_handles:
+                self.switch_to.window(self.window_handles[-1])
         if self.current_url and target_url in self.current_url:
             print("Already at tab having URL:", self.current_url) if self.debug else None
             return
