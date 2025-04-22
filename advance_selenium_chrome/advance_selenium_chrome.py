@@ -164,33 +164,39 @@ class AdvanceSeleniumChrome(webdriver.Chrome):
         return None
 
 
-    def bring_to_front(self):
+    def bring_to_front(self, suppress = False) -> None:
         """Activate the Chrome window to bring it to front."""
-        if self.browser_pid is None:
-            if self.remote_debugging_port:
-                self.browser_pid = self._get_pid_using_remote_debugging_chrome()
-            else:
-                self.browser_pid = next(child.pid for child in Process(self.service.process.pid).children() if child.name().lower() == "chrome.exe")
+        try:
+            if self.browser_pid is None:
+                if self.remote_debugging_port:
+                    self.browser_pid = self._get_pid_using_remote_debugging_chrome()
+                else:
+                    self.browser_pid = next(child.pid for child in Process(self.service.process.pid).children() if child.name().lower() == "chrome.exe")
 
-        if self.browser_pid is None:
-            raise RuntimeError(f"No Chrome process found{self.logging_string}.")
+            if self.browser_pid is None:
+                raise RuntimeError(f"No Chrome process found{self.logging_string}.")
 
-        chrome_windows = [window for window in getAllWindows() if 'chrome' in window.title.lower()]
-        for window in chrome_windows:
-            try:
-                hwnd = window._hWnd
-                if hwnd:
-                    _, window_pid = GetWindowThreadProcessId(hwnd)
-                    if window_pid == self.browser_pid or self.browser_pid in [child.pid for child in Process(window_pid).children()]:
-                        if not window.isMinimized:
-                            window.minimize()
-                        window.restore()
-                        window.activate()
-                        # print(f"Activated Chrome window: {window.title}")
-                        return
-            except Exception as e:
-                print(f"Error activating window: {e}")
-        raise RuntimeError(f"No Open Chrome window found{self.logging_string}.")
+            chrome_windows = [window for window in getAllWindows() if 'chrome' in window.title.lower()]
+            for window in chrome_windows:
+                try:
+                    hwnd = window._hWnd
+                    if hwnd:
+                        _, window_pid = GetWindowThreadProcessId(hwnd)
+                        if window_pid == self.browser_pid or self.browser_pid in [child.pid for child in Process(window_pid).children()]:
+                            if not window.isMinimized:
+                                window.minimize()
+                            window.restore()
+                            window.activate()
+                            # print(f"Activated Chrome window: {window.title}")
+                            return
+                except Exception as e:
+                    print(f"Error activating window: {e}")
+            raise RuntimeError(f"No Open Chrome window found{self.logging_string}.")
+        except Exception as e:
+            if suppress:
+                print(f"Error bringing Chrome to front: {e}") if self.debug else None
+                return None
+            raise e
 
     def switch_to_tab_with_url(self, target_url: str, new_tab_url: str = None):
         """
