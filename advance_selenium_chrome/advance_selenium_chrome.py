@@ -65,7 +65,7 @@ class AdvanceSeleniumChrome(webdriver.Chrome):
             self.remote_debugging_port = int(debugger_address.split(":")[-1]) if debugger_address else None
             if self.remote_debugging_port in range(53000, 54000):
                 self.remote_debugging_port = None
-            self.bring_to_front()
+            self.bring_to_front(suppress_error=True)
             print("Initialized Existing Chrome WebDriver", end='') if self.debug else None
         else:
             # Initialize the base class (webdriver.Chrome) with the configured options
@@ -79,7 +79,7 @@ class AdvanceSeleniumChrome(webdriver.Chrome):
                     self._launch_debugging_chrome()
                 else:
                     self._detect_and_handle_crashed_tabs()
-                    self.bring_to_front()
+                    self.bring_to_front(suppress_error=True)
                 options.add_experimental_option("debuggerAddress", f"127.0.0.1:{self.remote_debugging_port}")
             else:
                 if headless:
